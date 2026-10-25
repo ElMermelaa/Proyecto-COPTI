@@ -1,0 +1,10 @@
+# Alternativa de instalacion con pip. Para crear el entorno Conda, usa environment.yml.
+numpy>=1.24
+scipy>=1.10
+matplotlib>=3.7
+ipywidgets>=8
+ipympl>=0.9
+jupyterlab>=4
+notebook>=7
+ipykernel>=6
+pytest>=8
