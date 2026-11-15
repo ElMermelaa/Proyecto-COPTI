@@ -1,0 +1,15 @@
+# Archivos temporales
+*.log
+*.tmp
+.DS_Store
+
+# Resultados numéricos
+data/processed/*
+!data/processed/.gitkeep
+
+# Archivos generados
+docs/figures/*
+docs/videos/*
+
+# Archivos de VS Code locales
+.vscode/settings.json
