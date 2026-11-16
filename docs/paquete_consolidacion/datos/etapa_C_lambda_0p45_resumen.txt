@@ -1,0 +1,24 @@
+Archivo: data/processed/etapa_C_lambda_0p45.jld2
+Tamaño: 241953 bytes
+--- Campos y resúmenes (no se re-simula nada) ---
+abstol = 1.0e-9
+adjacency = Matrix{Float64}; tamaño=(12, 12); elementos=144; finitos=144/144; min=1.0; max=1.0
+center = Vector{Float64}; tamaño=(2,); elementos=2; finitos=2/2; min=0.0; max=1.4; contenido=[0.0, 1.4]
+center_distances = Vector{Float64}; tamaño=(961,); elementos=961; finitos=961/961; min=0.8704907588855622; max=1.9563522462700373
+currents_constant = Vector{Float64}; tamaño=(12,); elementos=12; finitos=12/12; min=0.0; max=0.0; contenido=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+currents_description = "constante individual"
+description = "Etapa C / λ=0.45 / fases distribuidas de órbita refinada (caché Etapa B)"
+error_E = Vector{Float64}; tamaño=(961,); elementos=961; finitos=961/961; min=2.386742603998123; max=4.738242834870583
+format_version = "FHN-stage-C-1"
+initial_state = Vector{Float64}; tamaño=(24,); elementos=24; finitos=24/24; min=-1.9447005781141362; max=2.270490758885562
+integrator = "Tsit5"
+lambda_description = "constante 0.45"
+lyapunov_V = Vector{Float64}; tamaño=(961,); elementos=961; finitos=961/961; min=39.451237572123325; max=117.98808623372584
+parameters = (a = 0.7, b = 0.5, tau = 12.5, I = 1.4, N = 12)
+phase_defined = BitVector; tamaño=(961,); elementos=961; finitos=961/961; min=1.0; max=1.0
+phase_r = Vector{Float64}; tamaño=(961,); elementos=961; finitos=961/961; min=6.389808625853433e-6; max=0.08826662383732227
+phase_r2 = Vector{Float64}; tamaño=(961,); elementos=961; finitos=961/961; min=4.082965427503093e-11; max=0.007790996883639349
+reltol = 1.0e-9
+saved_at = "2026-11-15T17:59:49.048"
+states = Matrix{Float64}; tamaño=(24, 961); elementos=23064; finitos=23064/23064; min=-2.3766166141291656; max=2.764756448169291
+times = Vector{Float64}; tamaño=(961,); elementos=961; finitos=961/961; min=0.0; max=240.0

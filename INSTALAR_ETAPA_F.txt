@@ -1,0 +1,17 @@
+ETAPA F - Instrucciones rápidas
+
+1. Extraer ZIP y copiar SU CONTENIDO a la raíz de K:\Repositorios\Proyecto-COPTI.
+2. Fusionar carpetas y reemplazar solamente src/FitzHughNagumoControl.jl.
+3. No reemplazar Project.toml, Manifest.toml ni módulos de A-E.
+4. No instalar dependencias nuevas.
+5. Ejecutar:
+   julia --project=. tests/test_stage_F.jl
+   julia --project=. scripts/run_stage_F.jl
+6. Video opcional (requiere data/processed/etapa_E_sync.jld2):
+   julia --project=. scripts/run_stage_F_video_only.jl
+   # Alternativa que también recalcula HJB: julia --project=. scripts/run_stage_F.jl --video
+7. Reiniciar kernel del notebook antes de abrir notebooks/06_hjb.ipynb.
+8. docs/RESULTADOS_GLOBALES.md es borrador: actualizar F con resultados obtenidos.
+
+IMPORTANTE: este paquete no ejecutó pruebas Julia en el entorno de creación.
+La HJB de sincronización es reducida (N=2), no el problema completo N=4.

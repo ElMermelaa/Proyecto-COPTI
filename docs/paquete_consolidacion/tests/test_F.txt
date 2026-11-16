@@ -1,0 +1,3 @@
+Test Summary:               | Pass  Total  Time
+Etapa F - HJB reducida y 4D |   42     42  3.5s
+Etapa F: pruebas completadas.

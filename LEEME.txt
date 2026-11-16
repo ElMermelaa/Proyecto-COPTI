@@ -1,0 +1,30 @@
+MA4703 — RECOPILACIÓN PARA INFORME FINAL
+
+1) Extrae este ZIP en K:\Repositorios\Proyecto-COPTI.
+   - Copia la carpeta "scripts" a la raíz del repositorio.
+   - Este paquete NO contiene ni reemplaza los módulos de A–F.
+   - No borres datos, imágenes ni videos.
+
+2) En CMD o terminal de VS Code, ubicado en la raíz del repositorio, ejecuta:
+
+   julia --project=. scripts/recopilar_resultados.jl
+
+   Esto vuelve a ejecutar los 6 archivos de tests y reúne datos guardados,
+   resúmenes de los JLD2, CSV de algunas series temporales, figuras PNG e
+   inventarios de videos. NO repite simulaciones, optimizaciones o animaciones.
+
+   Si no quieres volver a ejecutar los tests:
+
+   julia --project=. scripts/recopilar_resultados.jl --sin-tests
+
+3) Se generarán:
+
+   COPTI_Resultados_Para_Revision.zip
+   docs/paquete_consolidacion/RESUMEN_AUTOMATICO.md
+
+4) Súbeme COPTI_Resultados_Para_Revision.zip.
+   Los MP4 no se incluyen por tamaño; puedes enviar después un video o
+   dos para revisar su apariencia e interpretación.
+
+Seguridad: no escribe en src/, tests/, notebooks/ ni data/; no elimina ningún
+archivo original. Solo crea/reemplaza su carpeta de informes y el ZIP de salida.

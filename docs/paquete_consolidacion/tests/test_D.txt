@@ -1,0 +1,3 @@
+Test Summary:                            | Pass  Total   Time
+Etapa D — controles suficientes y costos |  161    161  19.5s
+Etapa D: pruebas completadas.

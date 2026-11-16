@@ -1,0 +1,22 @@
+ETAPA D — INSTALACIÓN EN EL REPOSITORIO EXISTENTE
+
+1) Extrae el ZIP y abre la carpeta extraída.
+2) Copia las carpetas src, docs, notebooks, scripts y tests (no la carpeta contenedora).
+3) Pégalas dentro de K:\Repositorios\Proyecto-COPTI y acepta COMBINAR carpetas.
+4) Cuando Windows pregunte por un archivo existente, reemplaza SOLO
+   src/FitzHughNagumoControl.jl. No reemplaces otros archivos.
+5) NO sobrescribas Project.toml, Manifest.toml, ni los resultados de A, B o C.
+
+COMANDOS EN CMD / POWERSHELL (NO EN julia>):
+
+julia --project=. tests/test_stage_D.jl
+julia --project=. scripts/run_stage_D.jl
+julia --project=. scripts/run_stage_D.jl --video
+
+Notebook: notebooks/04_sufficient_controls.ipynb
+Documentación: docs/ETAPA_D.md
+
+NO NECESITA PAQUETES NUEVOS.
+
+Esta entrega no se ha probado con el ejecutable Julia en esta sesión:
+corre los tests en tu instalación y comparte cualquier error completo.

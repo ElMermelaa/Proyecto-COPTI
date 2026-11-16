@@ -5,6 +5,8 @@ using OrdinaryDiffEq
 using CairoMakie
 using JLD2
 using Dates
+using ForwardDiff
+import NonlinearSolve
 
 # Etapa A — se conservan todas las firmas anteriores.
 include("models/parameters.jl")
@@ -46,5 +48,57 @@ export network_layout, plot_network_snapshot, plot_network_timeseries
 export plot_network_phase, plot_network_metrics, plot_coupling_comparison
 export animate_network_dashboard
 export save_network_result, load_network_result
+
+# Etapa D — leyes suficientes, certificación y evaluación (sin optimizar J).
+include("control/sufficient_controls.jl")
+include("analysis/control_guarantees.jl")
+include("analysis/control_costs.jl")
+include("visualization/control_plots.jl")
+include("utils/control_storage.jl")
+
+export AttractiveModulatedCoupling
+export FHNCurrentFeedback, feedback_currents, feedback_rhs!, feedback_rhs
+export simulate_feedback, balanced_current_profile, balanced_current_law
+export control_current_matrix, total_current_effort
+export sufficient_decay_rate, sufficient_arrival_time, lyapunov_certificate
+export feedback_lyapunov_derivative, feedback_lyapunov_upper_bound
+export first_tolerance_hit, evaluate_sync_cost, evaluate_desync_cost
+export plot_lyapunov_certificate, plot_control_comparison, plot_control_inputs
+export plot_sync_cost_traces, plot_desync_cost_traces
+export save_control_result, load_control_result
+
+
+# Etapa E - Pontryagin, optimización directa acotada y diagnósticos.
+include("control/optimal_pmp.jl")
+include("control/optimal_direct.jl")
+include("analysis/optimal_diagnostics.jl")
+include("visualization/optimal_plots.jl")
+include("utils/optimal_storage.jl")
+
+export SyncOCPSpec, DesyncOCPSpec
+export sync_error_gradient, phase_order_squared_gradient
+export sync_ocp_field, desync_ocp_field
+export sync_running_cost, desync_running_cost
+export sync_hamiltonian, desync_hamiltonian
+export sync_adjoint, desync_adjoint, sync_control_pmp, desync_control_pmp
+export project_balanced_box, piecewise_value, piecewise_currents
+export optimize_sync_direct, optimize_desync_direct
+export simulate_optimal_sync, simulate_optimal_desync
+export pmp_diagnostics_sync, pmp_diagnostics_desync, shoot_sync_pmp
+export plot_optimal_sync, plot_optimal_desync, plot_pmp_sync, plot_pmp_desync
+export save_optimal_result, load_optimal_result
+
+# Etapa F - aproximaciones HJB en dimensiones pequeñas y comparaciones.
+include("control/hjb_sync_reduced.jl")
+include("control/hjb_desync_small.jl")
+include("visualization/hjb_plots.jl")
+include("visualization/hjb_comparison_video.jl")
+include("utils/hjb_storage.jl")
+
+export ReducedSyncHJB, solve_reduced_sync_hjb, reduced_sync_state, reduced_sync_rhs
+export reduced_sync_value, reduced_sync_feedback, rollout_reduced_sync
+export SmallDesyncHJB, solve_small_desync_hjb, small_desync_feedback, rollout_small_desync
+export plot_hjb_sync, plot_hjb_desync, plot_hjb_comparison
+export animate_stage_E_comparison, animate_stage_E_desync_comparison, save_hjb_result
 
 end # module

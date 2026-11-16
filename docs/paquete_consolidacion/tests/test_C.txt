@@ -1,0 +1,3 @@
+Test Summary:                         | Pass  Total   Time
+Etapa C — redes neuronales y métricas |   89     89  18.9s
+Etapa C: pruebas completadas.

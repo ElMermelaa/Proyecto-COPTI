@@ -1,0 +1,26 @@
+Archivo: data/processed/etapa_E_sync.jld2
+Tamaño: 15820 bytes
+--- Campos y resúmenes (no se re-simula nada) ---
+M = 10
+T = 7.259864494337393
+algorithm = "augmented_lagrangian_with_verified_feasibility_restoration"
+center = Vector{Float64}; tamaño=(2,); elementos=2; finitos=2/2; min=0.0; max=1.4; contenido=[0.0, 1.4]
+control_segments = Vector{Float64}; tamaño=(10,); elementos=10; finitos=10/10; min=-2.5; max=0.09105344224395485; contenido=[-1.466509636223455, -1.1731383908582749, -0.5276254477625609, -0.06984466390576642, 0.09105344224395485, 0.06744422216562976, -0.1057022764121894, -0.8356786591411941, -2.1109490078748987, -2.5]
+current_samples = Matrix{Float64}; tamaño=(4, 50); elementos=200; finitos=200/200; min=0.0; max=0.0
+description = "Etapa E: candidato de control óptimo"
+error_E = Vector{Float64}; tamaño=(50,); elementos=50; finitos=50/50; min=0.0298996624690403; max=3.418540285999007
+format_version = "FHN-stage-E-1"
+initial_state = Vector{Float64}; tamaño=(8,); elementos=8; finitos=8/8; min=-1.5639178845392951; max=2.270490758885562; contenido=[0.0, 0.529509241111793, 1.5702824908350277, 1.753100380322713, -2.1619047097899605e-11, 2.270490758885562, -1.5639178845392951, 1.037302061251074]
+kind = "synchronization"
+lambda_samples = Vector{Float64}; tamaño=(50,); elementos=50; finitos=50/50; min=-2.5; max=0.09105344224395485
+objective_RK4 = 14.568487019893723
+parameters = (a = 0.7, b = 0.5, tau = 12.5, I = 1.4, N = 4)
+phase_r2 = Vector{Float64}; tamaño=(50,); elementos=50; finitos=50/50; min=2.807588919779681e-6; max=0.0011059600558892993
+pmp_control_residual = 0.998407101653474
+pmp_terminal_residual = 0.0
+saved_at = "2026-11-15T19:27:46.653"
+segment_boundaries = Vector{Float64}; tamaño=(11,); elementos=11; finitos=11/11; min=0.0; max=7.259864494337393; contenido=[0.0, 0.7259864494337392, 1.4519728988674785, 2.1779593483012176, 2.903945797734957, 3.6299322471686963, 4.355918696602435, 5.081905146036175, 5.807891595469914, 6.533878044903654, 7.259864494337393]
+states = Matrix{Float64}; tamaño=(8, 50); elementos=400; finitos=400/400; min=-1.9752977857009575; max=2.270490758885562
+substeps = 8
+terminal_E = 0.0298996624690403
+times = Vector{Float64}; tamaño=(50,); elementos=50; finitos=50/50; min=0.0; max=7.259864494337393

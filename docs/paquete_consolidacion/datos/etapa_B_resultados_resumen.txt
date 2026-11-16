@@ -1,0 +1,20 @@
+Archivo: data/processed/etapa_B_resultados.jld2
+Tamaño: 23909 bytes
+--- Campos y resúmenes (no se re-simula nada) ---
+branch_amplitudes = Vector{Float64}; tamaño=(5,); elementos=5; finitos=5/5; min=3.922596226796425; max=3.923831245254594; contenido=[3.9237711662627426, 3.923831245254594, 3.9236947715330546, 3.923260159039402, 3.922596226796425]
+branch_currents = Vector{Float64}; tamaño=(5,); elementos=5; finitos=5/5; min=1.2; max=1.4; contenido=[1.4, 1.35, 1.3, 1.25, 1.2]
+branch_periods = Vector{Float64}; tamaño=(5,); elementos=5; finitos=5/5; min=34.569606763416296; max=34.734985005692174; contenido=[34.569606763416296, 34.579857590768746, 34.610677655229104, 34.662271397254614, 34.734985005692174]
+branch_statuses = Vector{String}; tamaño=(5,); elementos=5; contenido=["converged", "converged", "converged", "converged", "converged"]
+generated_at = "2026-11-15T17:03:49.444"
+hopf = (I_minus = 0.10666941581048195, I_plus = 2.6933305841895177, kappa = -0.002551020408163265, omega = 0.28, period_linear = 22.439947525641376, kind = "supercritical")
+initial_condition = Vector{Float64}; tamaño=(2,); elementos=2; finitos=2/2; min=-1.4; max=-0.2; contenido=[-1.4, -0.2]
+integration_settings = (transient = 400.0, window = 350.0, dt = 0.25, reltol = 1.0e-9, abstol = 1.0e-9)
+integrator = "OrdinaryDiffEq.Tsit5"
+orbit = (period = 34.569606763416296, amplitude_v = 3.9237711662627426, amplitude_w = 1.7624446987408093, residual = 6.232456239940703e-15, stability = "stable", floquet = ComplexF64[0.0 + 0.0im, 1.0000000000508673 + 0.0im], state0 = [0.0, 0.529509241111793])
+orbit_states = Matrix{Float64}; tamaño=(2, 402); elementos=804; finitos=804/804; min=-1.9618855831305277; max=2.2812223493760637
+orbit_times = Vector{Float64}; tamaño=(402,); elementos=402; finitos=402/402; min=0.0; max=34.569606763416296
+parameters = (a = 0.7, b = 0.5, tau = 12.5, I = 1.4)
+scan_amplitudes = Vector{Float64}; tamaño=(17,); elementos=17; finitos=17/17; min=2.069716768341815e-9; max=3.921008768475
+scan_currents = Vector{Float64}; tamaño=(17,); elementos=17; finitos=17/17; min=-0.25; max=3.05
+scan_periods = Vector{Float64}; tamaño=(17,); elementos=17; finitos=17/17; min=11.435953817668102; max=46.27103388647864
+scan_statuses = Vector{String}; tamaño=(17,); elementos=17

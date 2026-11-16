@@ -1,0 +1,3 @@
+Test Summary:             | Pass  Total  Time
+Etapa A - FitzHugh–Nagumo |   61     61  4.6s
+Etapa A: pruebas completadas.
