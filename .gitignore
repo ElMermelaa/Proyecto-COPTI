@@ -8,8 +8,8 @@ data/processed/*
 !data/processed/.gitkeep
 
 # Archivos generados
-docs/figures/*
-docs/videos/*
+
+
 
 # Archivos de VS Code locales
 .vscode/settings.json
