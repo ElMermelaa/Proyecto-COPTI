@@ -60,7 +60,7 @@ function plot_periodic_orbit(p::FHNParameters, orbit; savepath=nothing)
     ax3 = Axis(fig[2,2], xlabel="t", ylabel="w(t)")
     lines!(ax3, s.t, ws; color=:darkorange2, linewidth=2.2)
     Label(fig[3,:],
-          "T=$(round(orbit.period,digits=5)), Amplitud v=$(round(orbit.amplitude_v,digits=4)), " *
+          "T=$(round(orbit.period,digits=5)), Amplitud v=$(round(orbit.amplitude_v,digits=4)) " 
           ;
           fontsize=14)
     return _save_figure(fig, savepath)
