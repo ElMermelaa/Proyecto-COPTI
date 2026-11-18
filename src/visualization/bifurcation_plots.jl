@@ -54,15 +54,14 @@ function plot_periodic_orbit(p::FHNParameters, orbit; savepath=nothing)
     scatter!(ax1, [zstar[1]], [zstar[2]]; marker=:star5,
              color=:black, markersize=19, label="Equilibrio")
     axislegend(ax1; position=:lt)
-    ax2 = Axis(fig[1,2], title="Potencial durante un período",
+    ax2 = Axis(fig[1,2], title="Evolución temporal",
                xlabel="t", ylabel="v(t)")
     lines!(ax2, s.t, vs; color=:royalblue3, linewidth=2.2)
     ax3 = Axis(fig[2,2], xlabel="t", ylabel="w(t)")
     lines!(ax3, s.t, ws; color=:darkorange2, linewidth=2.2)
     Label(fig[3,:],
           "T=$(round(orbit.period,digits=5)), Amplitud v=$(round(orbit.amplitude_v,digits=4)), " *
-          "|μ⊥|=$(round(abs(orbit.transverse_multiplier),digits=6)), " *
-          "cierre=$(round(orbit.residual,sigdigits=3))";
+          ;
           fontsize=14)
     return _save_figure(fig, savepath)
 end
