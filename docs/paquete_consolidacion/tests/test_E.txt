@@ -1,3 +1,0 @@
-Test Summary:                               | Pass  Total   Time
-Etapa E - Pontryagin y controles candidatos |   54     54  30.6s
-Etapa E: tests completados.

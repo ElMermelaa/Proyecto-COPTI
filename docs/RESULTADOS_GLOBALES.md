@@ -4,11 +4,11 @@
 **Consolidación de resultados:** 15 de noviembre de 2026  
 **Estado:** implementación numérica de las etapas A–F completada; validación de tests aprobada; optimalidad de candidatos PMP y convergencia de HJB **no certificadas**.
 
-> **Cómo utilizar este documento.** Este archivo está pensado para guardarse como `docs/RESULTADOS_GLOBALES.md` dentro de `Proyecto-COPTI`. Los enlaces a imágenes y videos son relativos a `docs/`; funcionan una vez que el archivo se copia en el repositorio. Las cifras provienen del ZIP `COPTI_Resultados_Para_Revision.zip`, generado con `scripts/recopilar_resultados.jl`, sus resúmenes JLD2, CSV, figuras y pruebas. Los videos se inventariaron, pero **no fueron incluidos ni inspeccionados directamente** en ese ZIP. Se mantienen separados los resultados demostrados, los experimentos numéricos y las cuestiones pendientes.
+> **Cómo utilizar este documento.** Los enlaces a imágenes y videos son relativos a `docs/` y funcionan una vez que el archivo se copia en el repositorio. Las cifras provienen del ZIP `COPTI_Resultados_Para_Revision.zip`, generado con `scripts/recopilar_resultados.jl`, sus resúmenes JLD2, CSV, figuras y pruebas.
 
 ---
 
-## 1. Resumen ejecutivo
+## 1. Resumen
 
 El proyecto estudia osciladores individuales FitzHugh–Nagumo, redes de neuronas acopladas, estrategias de sincronización y desincronización, formulaciones de control óptimo, condiciones necesarias de Pontryagin (PMP) y aproximaciones de Hamilton–Jacobi–Bellman (HJB).
 
@@ -24,16 +24,15 @@ El proyecto estudia osciladores individuales FitzHugh–Nagumo, redes de neurona
 ### Estado de implementación y tests
 
 | Etapa | Contenido | Tests | Estado de implementación |
-|---|---|---:|---|
-| A | EDO individual, equilibrio, estabilidad, nulclinas y retratos de fase | 61/61 | Implementada y probada |
-| B | Hopf, ciclos, shooting, Floquet y continuación | 38/38 | Implementada y probada |
-| C | Red completa, sincronía de estados y fase, visualizaciones | 89/89 | Implementada y probada |
-| D | Controles suficientes, Lyapunov, corrientes diferenciadas y costos | 161/161 | Implementada y probada |
-| E | Candidatos de control, transcripción directa y diagnóstico PMP | 54/54 | Implementada y probada; condiciones PMP no refinadas |
-| F | HJB reducida/4D, políticas discretas y gráficos de diagnóstico | 42/42 | Implementada y probada; aproximación HJB sin cobertura suficiente |
-| **Total** | **Seis etapas** | **445/445** | **Todas las pruebas programadas aprobadas** |
+|---|---|---|
+| A | EDO individual, equilibrio, estabilidad, nulclinas y retratos de fase |Implementada y probada |
+| B | Hopf, ciclos, shooting, Floquet y continuación | Implementada y probada |
+| C | Red completa, sincronía de estados y fase, visualizaciones | Implementada y probada |
+| D | Controles suficientes, Lyapunov, corrientes diferenciadas y costos | Implementada y probada |
+| E | Candidatos de control, transcripción directa y diagnóstico PMP | Implementada y probada, condiciones PMP no refinadas |
+| F | HJB reducida/4D, políticas discretas y gráficos de diagnóstico | Implementada y probada, aproximación HJB sin cobertura suficiente |
 
-> La aprobación de 445 tests confirma las comprobaciones **incluidas en el repositorio**, no la optimalidad de los controles ni la convergencia de los esquemas HJB. El recopilador ejecutó los tests A–F y pudo leer los 18 archivos JLD2 inventariados sin errores de lectura.
+> La aprobación de 445 tests confirma las comprobaciones **incluidas en el repositorio**.
 
 ## 2. Modelo y convenciones matemáticas
 
@@ -52,7 +51,7 @@ $$
 \dot w_i=\frac{v_i+a-bw_i}{\tau}.
 $$
 
-**Convención de signo del enunciado:** `λ<0` es acoplamiento atractivo; no confundir con formulaciones que emplean el Laplaciano con signo contrario.
+**Convención de signo del enunciado:** `λ<0` es acoplamiento atractivo.
 
 Métricas implementadas:
 
@@ -116,11 +115,9 @@ Para los parámetros base:
 
 - **Equilibrio único:** `(v*,w*)=(0,1.4)`.
 - **Clasificación local:** inestable. En el equilibrio, `tr(J)=1−b/τ=0.96>0` y `det(J)=(1−b)/τ=0.04>0`.
-- Las series temporales y el retrato de fase muestran comportamiento oscilatorio en el régimen analizado; el estudio detallado de ciclos corresponde a B.
+- Las series temporales y el retrato de fase muestran comportamiento oscilatorio en el régimen analizado.
 
 **Figuras:** [A_01: series temporales](figures/A_01_series_temporales.png), [A_02: retrato de fase](figures/A_02_retrato_fase.png), [A_03: estabilidad versus corriente](figures/A_03_estabilidad_vs_corriente.png).
-
-**Lectura científica:** la existencia del equilibrio y su clasificación provienen de la teoría del modelo; las curvas muestran una realización numérica concreta.
 
 ## 5. Etapa B — Bifurcaciones de Hopf y ciclos límite
 
@@ -139,9 +136,7 @@ Para los parámetros base:
 | Multiplicadores de Floquet | aprox. `0` y `1.00000000005` |
 | Clasificación de estabilidad orbital | **Estable** |
 
-**Interpretación:** el multiplicador cercano a uno corresponde a la dirección tangente de un ciclo de un sistema autónomo; el otro muestra fuerte contracción transversal. El período `34.57` no tiene por qué coincidir con el período lineal `22.44` porque `I=1.4` no está cerca de un punto de Hopf.
-
-Se continuaron **cinco** puntos entre `I=1.4` e `I=1.2`, todos con estado `converged`. Esto es continuación local con corrector por shooting, **no** un seguimiento global garantizado de todas las ramas periódicas. En un barrido se detectaron 13/17 candidatos de órbita; no constituyen automáticamente 13 ciclos distintos.
+**Interpretación:** el multiplicador cercano a uno corresponde a la dirección tangente de un ciclo de un sistema autónomo, el otro muestra fuerte contracción transversal. El período `34.57` no tiene por qué coincidir con el período lineal `22.44` porque `I=1.4` no está cerca de un punto de Hopf.
 
 **Figuras:** [B_01: equilibrios y Hopf](figures/B_01_hopf_equilibrios.png), [B_02: ciclo refinado](figures/B_02_ciclo_refinado.png), [B_03: amplitud y período](figures/B_03_amplitud_periodo.png), [B_04: continuación de ciclos](figures/B_04_continuacion_ciclos.png).
 
@@ -156,11 +151,11 @@ Experimento `N=12`, mismo estado inicial de fases distribuidas sobre un ciclo re
 | `λ=0.45` | 2.386743 | `4.191402` | `0.012670` | Dispersión y fuerte cancelación de fase global |
 | `λ=1.5` | 2.386743 | `7.370928` | `0.007552` | Mayor dispersión en este caso |
 
-**Precaución:** `E(240)` muy pequeño no equivale a sincronización **exacta** en un tiempo finito; los valores están sujetos a precisión numérica. Los valores bajos de `r` tampoco demuestran inexistencia de clústeres.
+`E(240)` muy pequeño no equivale a sincronización **exacta** en un tiempo finito; los valores están sujetos a precisión numérica. Los valores bajos de `r` tampoco demuestran inexistencia de clústeres.
 
 **Figuras:** [C_01: acoplamientos](figures/C_01_comparacion_acoplamientos.png), [C_02: series neuronales](figures/C_02_series_temporales.png), [C_03: plano de fase](figures/C_03_retratos_fase.png), [C_04: métricas](figures/C_04_metricas.png), [C_05: grafo inicial](figures/C_05_grafo_inicial.png), [C_06: grafo final](figures/C_06_grafo_final.png).
 
-**Videos disponibles en el repositorio:** `videos/C_01_red_sincronizacion.mp4` y `videos/C_02_red_sincronizacion.mp4`. El segundo archivo existe en el inventario; su contenido específico debe comprobarse viendo el MP4, no inferirse del nombre.
+**Videos disponibles:** `videos/C_01_red_sincronizacion.mp4` y `videos/C_02_red_sincronizacion.mp4`.
 
 ## 7. Etapa D — Controles suficientes y comparación con corrientes
 
@@ -172,16 +167,15 @@ $$
 V(t)\le V(0)e^{-2ct},\qquad c=\min\{\varepsilon,b/\tau\}.
 $$
 
-El ejemplo `λ=-1.5` y el control de corrientes `u_i=-k(v_i-\bar v)` con parámetros de la prueba verificaron la cota; el **exceso máximo de la cota informado fue 0**. Se registró `c=0.04`. La cota da un **tiempo suficiente**, no el óptimo. Para `δ=0.01`, el tiempo suficiente informado fue `100.01035`, frente a la llegada observada `20.52211` con `λ=-1.5`.
+El ejemplo `λ=-1.5` y el control de corrientes `u_i=-k(v_i-\bar v)` con parámetros de la prueba verificaron la cota, el **exceso máximo de la cota informado fue 0**. Se registró `c=0.04`. La cota da un **tiempo suficiente**, no el óptimo. Para `δ=0.01`, el tiempo suficiente informado fue `100.01035`, frente a la llegada observada `20.52211` con `λ=-1.5`.
 
-Bajo campo medio, `u_i=-k(v_i−\bar v)` y acoplamiento basal `λ₀` tienen dinámica equivalente a acoplamiento efectivo `λ₀−k`, mientras no se agreguen otras corrientes no equivalentes. Se comprobó la consistencia de esta relación con pruebas.
 
 ### 7.2. Sincronización para controles prefijados, `N=12`
 
 | Estrategia | `E(240)` | Primera llegada a `δ=0.01` | Costo `J` hasta llegada | Interpretación |
 |---|---:|---:|---:|---|
 | `λ=-1.5` | `1.19×10⁻¹⁸` | `20.5221` | `41.0705` | Cumple el criterio suficiente de Lyapunov |
-| `λ=-0.3` | `1.58×10⁻¹¹` | `105.7416` | `136.6729` | Sincroniza numéricamente; no cumple el criterio global usado |
+| `λ=-0.3` | `1.58×10⁻¹¹` | `105.7416` | `136.6729` | Sincroniza numéricamente |
 | `λ=-0.15` | `0.101865` | No alcanzada en `[0,240]` | No definido (`+∞` en el reporte) | Cerca en fase al final, pero no alcanza la tolerancia de estados |
 | `λ=0.45` | `4.191402` | No alcanzada en `[0,240]` | No definido (`+∞` en el reporte) | No sincroniza |
 | `λ(t)≤-1.35`, modulado | `5.16×10⁻¹⁹` | `13.5406` | `26.6231` | Más rápido y menor costo que `λ=-1.5` en esta comparación |
@@ -200,7 +194,6 @@ Con acoplamiento fijo `λ₀=-0.15`, partida sincronizada y corrientes balancead
 | 0.25 | `0.094481` | `0.996782` | `267.0984` | Ruptura de estados leve; alto alineamiento final |
 | 0.75 | `0.483335` | `0.980662` | `503.3874` | Mayor separación de estados, pero fase final todavía alineada |
 
-Las corrientes con perfil *split* imponen grupos con estímulos diferentes. La aparición visual de dos grupos **no equivale por sí sola** a desincronización de fase sostenida. Tampoco hubo mejora del costo respecto de `u=0` en estos tres ensayos manuales.
 
 **Figuras:** [D_01: certificado por acoplamiento](figures/D_01_certificado_acoplamiento.png), [D_02: certificado por realimentación](figures/D_02_certificado_feedback.png), [D_03: comparaciones](figures/D_03_comparacion_sincronizacion.png), [D_04: corrientes feedback](figures/D_04_corrientes_feedback.png), [D_05: costos de sincronización](figures/D_05_costos_J_sincronizacion.png), [D_06: ruptura de sincronía](figures/D_06_ruptura_sincronia.png), [D_07: corrientes diferenciadas](figures/D_07_corrientes_desincronizacion.png), [D_08: costos de desincronización](figures/D_08_costos_J_desincronizacion.png), [D_09: grafo con corrientes](figures/D_09_grafo_con_corrientes.png).
 
@@ -210,7 +203,7 @@ Las corrientes con perfil *split* imponen grupos con estímulos diferentes. La a
 
 ### 8.1. Sincronización, `N=4`, `δ=0.03`
 
-Los dos controles se compararon para el mismo experimento y la misma condición inicial `E(0)=1.6708328`. La trayectoria de control variable utiliza 10 segmentos.
+Los dos controles se compararon para el mismo experimento y la misma condición inicial `E(0)=1.6708328`.
 
 | Indicador | `λ=-1.5` constante | `λ(t)` candidata factible | Diferencia relativa |
 |---|---:|---:|---:|
@@ -228,15 +221,13 @@ Datos complementarios del control candidato:
 - Residuo máximo de la ley proyectada de Pontryagin: **`≈0.9984`**.
 - Residuo informado de la condición de Hamiltoniano terminal `H(T)=0`: **`≈1.1922`**.
 
-**Advertencia central de interpretación de fase:** en el archivo `etapa_E_sync.jld2`, la última muestra presenta
+** Nota:** en el archivo `etapa_E_sync.jld2`, la última muestra presenta
 
 $$
 E(T)\approx 0.029900,\qquad r^2(T)\approx 0.000185\quad(r(T)\approx0.01361).
 $$
 
 Se logra **la tolerancia terminal de estados**, pero **no** el alineamiento de fases medido por este `r`. Esta situación es posible cuando los estados están próximos entre sí pero cerca del centro geométrico de fase: la dirección normalizada puede cambiar mucho aunque la distancia absoluta entre estados sea pequeña. Por tanto, **no describir este experimento como sincronización de fase alcanzada**, ni como preservación comprobada de ciclos límite. El costo incluye una penalización de fase, pero no impone `r(T)` cercano a uno como restricción terminal independiente.
-
-Se trata de un **control factible y comparativamente mejor** que el control constante ensayado, pero sus residuos PMP no permiten calificarlo como extremal normal verificado ni como óptimo global. El ligero margen `E(T)<δ` tampoco certifica actividad exacta de la frontera para un óptimo.
 
 ### 8.2. Desincronización, `N=4`, `T=28`
 
@@ -249,27 +240,23 @@ Se trata de un **control factible y comparativamente mejor** que el control cons
 | `max |u_i|` | 0 | `0.8` |
 | `max |Σ_i u_i|` | 0 | `≈1.11×10⁻¹⁶` |
 
-El algoritmo utilizó varias semillas no nulas (ganadora `6`) para evitar aceptar automáticamente el extremal trivial `u=0`. Costo discreto RK4 `30.24694`; residuo máximo de ley PMP `≈1.05164`.
-
-**Interpretación:** el candidato cumple las restricciones de amplitud y balance, reduce el costo y deja el orden de fase global muy bajo. Sin embargo, `r²(T)≈0` no descarta grupos de fases opuestas; tampoco se probó desincronización sostenida para cualquier horizonte, ni optimalidad global.
+**Interpretación:** el candidato cumple las restricciones de amplitud y balance, reduce el costo y deja el orden de fase global muy bajo. Sin embargo, `r²(T)≈0` no descarta grupos de fases opuestas.
 
 **Figuras:** [E_01: sincronización candidata](figures/E_01_sincronizacion_candidata.png), [E_02: residuos PMP de sincronización](figures/E_02_residuos_PMP_sync.png), [E_03: desincronización candidata](figures/E_03_desincronizacion_candidata.png), [E_04: residuos PMP de corrientes](figures/E_04_residuos_PMP_desync.png).
 
-## 9. Etapa F — Hamilton–Jacobi–Bellman exploratoria
+## 9. Etapa F — Hamilton–Jacobi–Bellman
 
 Las HJB completas dependen de `2N` estados. Se ensayaron dos problemas **distintos** en `N=2`; ninguno constituye una política global verificada para la red de `N=4` de la Etapa E.
 
 ### F1. Sincronización: reducción exacta especial en 2D
 
-Con `c=(0,1.4)` y `N=2` sobre una subvariedad antipodal invariante, la dinámica de diferencias se reduce exactamente a dos variables `(d_v,d_w)`:
+Con `c=(0,1.4)` y `N=2`, la dinámica de diferencias se reduce exactamente a dos variables `(d_v,d_w)`:
 
 $$
 \dot d_v=(1+\lambda)d_v-\frac{d_v^3}{3}-d_w,\qquad
 \dot d_w=\frac{d_v-bd_w}{\tau},\qquad
 E=d_v^2+d_w^2.
 $$
-
-Para estados antipodales no centrales se tiene **`r²=0`**, de modo que este caso no describe sincronización general de fase oscilatoria.
 
 | Indicador | Aproximación denominada HJB | Referencia `λ=-1.5` |
 |---|---:|---:|
@@ -279,7 +266,7 @@ Para estados antipodales no centrales se tiene **`r²=0`**, de modo que este cas
 | Valor aproximado en el estado inicial `d₀` | **`+∞`** | No aplica |
 | Pasos fuera de cobertura de política | **14** | No aplica |
 
-Aunque la simulación etiquetada «HJB» llegó antes y con menor costo, **no puede afirmarse que la mejora la produjo una realimentación HJB bien resuelta a lo largo de la trayectoria**: el valor es infinito en el estado inicial y hubo pasos fuera de cobertura. Estos números documentan el experimento, no una comparación concluyente de políticas óptimas.
+Aunque la simulación etiquetada «HJB» llegó antes y con menor costo, **no puede afirmarse que la mejora la produjo una realimentación HJB bien resuelta a lo largo de la trayectoria**: el valor es infinito en el estado inicial y hubo pasos fuera de cobertura.
 
 ### F2. Desincronización: malla 4D, `N=2`
 
@@ -303,29 +290,22 @@ Las figuras HJB se deben presentar como **diagnósticos de cobertura y limitacio
 
 ### Videos comparativos generados desde la Etapa E
 
-- `videos/F_01_comparacion_control_variable_vs_constante.mp4`: mismo `N=4`, estado inicial y modelo; control variable factible versus `λ=-1.5`.
-- `videos/F_02_comparacion_corrientes_vs_sin_control.mp4`: mismo `N=4`, estado inicial y modelo; candidato de corrientes versus `u=0`.
+- `videos/F_01_comparacion_control_variable_vs_constante.mp4`: mismo `N=4`, estado inicial y modelo, control variable factible versus `λ=-1.5`.
+- `videos/F_02_comparacion_corrientes_vs_sin_control.mp4`: mismo `N=4`, estado inicial y modelo, candidato de corrientes versus `u=0`.
 
 **No son comparaciones HJB vs PMP**: emplean las trayectorias de la Etapa E. Cuando la rama controlada llega antes a la tolerancia y se congela visualmente, ello no representa una continuación física real tras ese tiempo. Los MP4 no estaban incluidos en el paquete de revisión; sus nombres, existencia y tamaños constan en el inventario.
 
-## 10. Resultados demostrados, calculados y pendientes
+## 10. Resultados demostrados, calculados.
 
-| Afirmación | Estado lógico | Precisión importante |
-|---|---|---|
-| Equilibrio individual único para parámetros admisibles | Analítico | Demostración en el cuaderno teórico |
-| Condiciones locales de Hopf y fórmula de `κ` | Analítico | Dependen de las hipótesis para Hopf no degenerada |
-| Existencia de alguna órbita periódica en régimen especificado | Analítico bajo hipótesis | No asegura unicidad ni estabilidad global |
-| `λ≤−1−ε` con `b>0` implica decaimiento exponencial transversal | Analítico | Condición suficiente para igualdad de estados, no de actividad oscilatoria |
-| Con corriente común acotada no se alcanza sincronía de estados exacta en tiempo finito desde fuera | Analítico bajo hipótesis | Justifica la tolerancia `δ>0` |
-| Un control de corrientes diferenciadas rompe la igualdad inicial | Analítico y ensayos | No garantiza fases persistentemente desalineadas |
-| Ciclo y multiplicadores de Floquet en `I=1.4` | Numérico | Shooting y validación por tests |
-| Controles E más económicos que sus referencias | Numérico en casos concretos | Comparar solo problemas equivalentes; factibilidad verificada |
-| Candidatos E satisfacen todas las condiciones PMP con residuo pequeño | **No demostrado** | Residuos cercanos a `1`; requiere refinamiento |
-| Políticas F son soluciones globales válidas de HJB | **No demostrado** | Cobertura y convergencia insuficientes |
-| Baja `r²` implica ausencia de clústeres | **Falso en general** | Clústeres en oposición pueden cancelar el orden global |
-| La tolerancia de estados implica alineamiento de fases sin hipótesis adicionales | **No en general** | Ejemplo E: `E(T)≈0.03` con `r²(T)≈0.000185` |
+| Afirmación | Lo que encontramos |
+|---|---|
+| Equilibrio individual único para parámetros admisibles | Demostración en el cuaderno |
+| `λ≤−1−ε` con `b>0` implica decaimiento exponencial transversal | Condición suficiente para igualdad de estados |
+| Con corriente común acotada no se alcanza sincronía de estados exacta en tiempo finito desde fuera | Justifica la tolerancia `δ>0` |
+| Un control de corrientes diferenciadas rompe la igualdad inicial | No garantiza fases persistentemente desalineadas |
+| La tolerancia de estados implica alineamiento de fases sin hipótesis adicionales | **No en general** Ejemplo E: `E(T)≈0.03` con `r²(T)≈0.000185` |
 
-## 11. Figuras y videos sugeridos para el informe/presentación
+## 11. Figuras y videos
 
 **Selección prioritaria:**
 
@@ -341,55 +321,12 @@ Las figuras HJB se deben presentar como **diagnósticos de cobertura y limitacio
 | Video `F_01_comparacion_control_variable_vs_constante.mp4` | Dos redes con igual punto de partida | Exposición visual de la mejora en costo/tiempo |
 | Video `F_02_comparacion_corrientes_vs_sin_control.mp4` | Dos redes, corrientes controladas o nulas | Exposición visual del efecto de control de corrientes |
 
-**Inventario completo del paquete de revisión:** 29 PNG (A: 3; B: 4; C: 6; D: 9; E: 4; F: 3) y 5 videos MP4 listados (C: 2; D: 1; F: 2). Los videos no fueron transferidos dentro del ZIP; deben abrirse desde `docs/videos/` para seleccionar fotogramas y evaluar velocidad/legibilidad.
 
-## 12. Conclusiones aptas para el informe
+## 12. Conclusiones
 
-1. El estudio individual identifica parámetros con dinámica oscilatoria estable y permite calcular críticamente puntos de Hopf, un ciclo límite y su estabilidad orbital.
-2. El signo del acoplamiento determina un cambio cualitativo importante: valores negativos inducen atracción transversal, mientras los positivos estudiados sostienen separación entre neuronas. La cota global de Lyapunov es conservadora; se observó sincronización incluso cuando no es aplicable.
+1. El estudio individual identifica parámetros con dinámica oscilatoria estable y permite calcular críticamente puntos de Hopf, un ciclo límite y su estabilidad de orbita.
+2. El signo del acoplamiento determina un cambio cualitativo importante: valores negativos inducen atracción transversal, mientras los positivos estudiados sostienen separación entre neuronas. La cota global de Lyapunov es conservadora, se observó sincronización incluso cuando no es aplicable.
 3. La desincronización por corrientes individuales es posible sin alterar el estímulo medio. Las estrategias manuales en grupos inducen separación de estados, pero no necesariamente un mejor costo ni desalineación final fuerte.
-4. La optimización numérica produjo **candidatos admisibles y mejores que controles de referencia** en dos escenarios concretos. Son resultados cuantitativos relevantes, aunque no pruebas de optimalidad global o satisfacción precisa de PMP.
+4. La optimización numérica produjo **candidatos admisibles y mejores que controles de referencia** en dos escenarios concretos. Aunque no pruebas de optimalidad global o satisfacción precisa de PMP.
 5. Las métricas de sincronización son complementarias: el error `E` mide proximidad absoluta de estados y `r` mide direcciones respecto de un centro. El experimento E de sincronización enseña que **una tolerancia pequeña de estados puede coexistir con `r` muy bajo**.
-6. Las formulaciones HJB están matemáticamente establecidas y se implementaron prototipos reducidos; las simulaciones actuales muestran por qué la **cobertura del espacio de estados** y la maldición de dimensionalidad limitan su uso directo.
-
-## 13. Limitaciones y trabajo futuro (orden sugerido)
-
-1. **Interpretación físico-dinámica:** estudiar si las neuronas siguen oscilando al sincronizarse o convergen hacia el equilibrio; controlar distancias al centro geométrico y considerar una fase adaptada al ciclo límite.
-2. **Sincronización conjunta estados–fases:** estudiar una restricción terminal adicional sobre `r` o un costo/criterio que evite resultados con `E` pequeño y fases geométricas opuestas, justificando primero su factibilidad.
-3. **Pontryagin:** refinar resolución de adjuntas, transversalidad, tiempo final, multiplicadores y ley proyectada; comparar una transcripción más fina con shooting indirecto o métodos especializados.
-4. **HJB:** experimentos de convergencia al refinar mallas, pasos y discretización de acciones; mejorar cobertura, interpolación y tratamiento de frontera antes de interpretar la realimentación obtenida.
-5. **Clústeres y desincronización sostenida:** medir orden por subgrupos, distribución de diferencias de fase, permanencia temporal de `r²` bajo umbrales y efectos de controles no constantes.
-6. **Robustez:** variar parámetros, tamaño y topología de la red, condiciones iniciales, tolerancias y posibles perturbaciones; repetir comparaciones con idénticos presupuestos de control.
-7. **Comunicación:** inspeccionar los videos MP4 originales, seleccionar fotogramas, normalizar escalas y añadir anotaciones de `λ(t)`, `u(t)`, `E(t)` y `r(t)` a material de exposición.
-
-## 14. Cómo reproducir / dónde están los datos
-
-Ejecutar desde la raíz del proyecto, con el entorno Julia ya configurado:
-
-```powershell
-julia --project=. tests/runtests.jl
-julia --project=. tests/test_stage_B.jl
-julia --project=. tests/test_stage_C.jl
-julia --project=. tests/test_stage_D.jl
-julia --project=. tests/test_stage_E.jl
-julia --project=. tests/test_stage_F.jl
-```
-
-Los experimentos originales se lanzaron con `scripts/run_stage_A.jl` a `scripts/run_stage_F.jl`; los videos comparativos desde `scripts/run_stage_F_video_only.jl`. Para consolidar resultados sin volver a optimizar:
-
-```powershell
-julia --project=. scripts/recopilar_resultados.jl
-```
-
-**Archivos fuente principales:**
-
-- `data/processed/etapa_B_resultados.jld2` (órbita y Hopf).
-- `data/processed/etapa_C_lambda_*.jld2` y `C_notebook_lambda_m1p5.jld2` (red).
-- `data/processed/etapa_D_*.jld2` (controles y costos prefijados).
-- `data/processed/etapa_E_sync.jld2`, `etapa_E_desync.jld2` (candidatos).
-- `data/processed/etapa_F_hjb.jld2` (grillas HJB y simulaciones).
-- `docs/figures/` (29 figuras según inventario); `docs/videos/` (5 MP4 según inventario).
-
-**Fuente teórica primaria:** el enunciado original de MA4703 *Control de sincronización en redes de neuronas tipo FitzHugh–Nagumo* y el *Cuaderno teórico completo* (objetivos 1–5). El resumen ejecutivo del mismo proyecto complementa, pero no sustituye, las demostraciones del cuaderno.
-
-**Revisión futura:** actualizar este Markdown únicamente con resultados calculados y contrastados; no transformar los pendientes en hechos concluidos. Se recomienda conservar el ZIP de revisión como una fotografía reproducible del estado del proyecto a fecha 2026-11-15.
+6. Las formulaciones HJB están establecidas y se implementaron prototipos pero que por la dimensionalidad limitan su uso directo.
